@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Model Selection — Atlanta MSA Population Forecast</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; font-family: Arial, sans-serif; padding: 32px; }
+  h1 { font-size: 15px; font-weight: 700; color: #1a1a1a; text-align: center; margin-bottom: 6px; }
+  h2 { font-size: 11px; font-weight: 400; color: #555; text-align: center; margin-bottom: 28px; }
+
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  /* ── generic box ── */
+  .box {
+    border-radius: 6px;
+    padding: 10px 18px;
+    text-align: center;
+    position: relative;
+  }
+  .box .title { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+  .box .sub   { font-size: 10.5px; font-weight: 400; color: #333; line-height: 1.5; }
+
+  /* ── color schemes ── */
+  .gray   { background:#f0eeea; border:1px solid #bbb; }
+  .blue   { background:#e6f0fb; border:1px solid #7baed4; }
+  .green  { background:#e8f4de; border:1px solid #6bad3a; }
+  .amber  { background:#fef3d8; border:1px solid #d4950a; }
+  .red    { background:#fdeaea; border:1px solid #d46060; }
+  .coral  { background:#fce8e0; border:1px solid #d47060; }
+  .teal   { background:#e0f4ee; border:1px solid #3aad8a; }
+  .purple { background:#eeedf8; border:1px solid #8b85cc; }
+
+  /* ── arrows ── */
+  .arrow-down {
+    width: 2px; height: 22px;
+    background: #999;
+    position: relative;
+    margin: 0 auto;
+  }
+  .arrow-down::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: -4px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid #999;
+  }
+
+  /* ── 3-col layout for models ── */
+  .three-col { display: flex; gap: 20px; align-items: flex-start; width: 960px; }
+  .col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+
+  /* horizontal branch lines */
+  .branch-row {
+    display: flex; align-items: flex-start;
+    width: 960px; position: relative; margin-top: 0;
+  }
+  .branch-line {
+    position: absolute; top: 0; left: 50%; right: 50%;
+    height: 1px; background: #999;
+  }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; color: #888;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-top: 1px solid #ddd;
+    padding-top: 6px; margin-top: 4px; margin-bottom: 10px;
+    text-align: center; width: 100%;
+  }
+
+  /* convergence bar */
+  .converge {
+    width: 960px; height: 1px; background: #999; margin: 0 auto;
+  }
+
+  /* legend */
+  .legend { display: flex; gap: 18px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #444; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+  @media print {
+    body { padding: 12px; }
+    .three-col, .branch-row, .converge { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Model Selection Rationale — Atlanta MSA 10-Year Population Forecast</h1>
+<h2>Why the cohort-component model was chosen over component extrapolation and ARIMA</h2>
+
+<div class="flow">
+
+  <!-- START -->
+  <div class="box gray" style="width:420px">
+    <div class="title">Population forecasting objective</div>
+    <div class="sub">Atlanta–Sandy Springs–Roswell, GA MSA · Horizon: 2025–2035</div>
+  </div>
+  <div class="arrow-down"></div>
+
+  <div class="box gray" style="width:420px">
+    <div class="title">Three candidate models evaluated</div>
+    <div class="sub">Select best approach based on accuracy, interpretability, and demographic validity</div>
+  </div>
+
+  <!-- horizontal split into 3 -->
+  <div style="width:960px; height:30px; position:relative; margin:0 auto;">
+    <div style="position:absolute; top:0; left:50%; width:1px; height:30px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:calc(16.67%); width:calc(66.66%); height:1px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:calc(16.67%); width:1px; height:18px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:50%; width:1px; height:18px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:calc(83.33%); width:1px; height:18px; background:#999;"></div>
+  </div>
+
+  <!-- THREE COLUMNS -->
+  <div class="three-col">
+
+    <!-- COL A: EXTRAPOLATION -->
+    <div class="col">
+      <div class="section-label">Model 1</div>
+      <div class="box blue" style="width:290px">
+        <div class="title">Component Extrapolation</div>
+        <div class="sub">P<sub>t+1</sub> = P<sub>t</sub>(1 + g)</div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box blue" style="width:290px">
+        <div class="title">Method</div>
+        <div class="sub">
+          Convert counts to rates:<br>
+          b<sub>t</sub> = B<sub>t</sub>/P<sub>t</sub>,  d<sub>t</sub> = D<sub>t</sub>/P<sub>t</sub>,  m<sub>t</sub> = M<sub>t</sub>/P<sub>t</sub><br><br>
+          g = b − d + m<sub>int</sub> + m<sub>dom</sub> + r<br><br>
+          σ<sub>g</sub> = √(σ²<sub>b</sub> + σ²<sub>d</sub> + σ²<sub>m</sub>)<br>
+          Uncertainty: σ<sub>t</sub> = σ<sub>g</sub>·√t
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box blue" style="width:290px">
+        <div class="title">Rolling 10-year window</div>
+        <div class="sub">
+          μ<sub>r</sub> = rolling mean of each rate<br>
+          σ<sub>r</sub> = rolling std of each rate<br>
+          Reduces noise, captures recent trend
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box green" style="width:290px">
+        <div class="title">Result</div>
+        <div class="sub">Stable, smooth projection<br>CI bands widen as σ<sub>g</sub>·√t</div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box amber" style="width:290px">
+        <div class="title">Critical limitation</div>
+        <div class="sub">
+          Single scalar g drives all projections<br>
+          No age structure — cannot capture:<br>
+          · Cohort aging dynamics<br>
+          · Age-specific mortality m<sub>x</sub><br>
+          · Age-specific fertility f<sub>a</sub>
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box coral" style="width:290px">
+        <div class="title">Verdict: Rejected</div>
+        <div class="sub">Mechanically driven; no demographic meaning</div>
+      </div>
+    </div>
+
+    <!-- COL B: ARIMA -->
+    <div class="col">
+      <div class="section-label">Model 2</div>
+      <div class="box blue" style="width:290px">
+        <div class="title">ARIMA(1,1,0) — Log Population</div>
+        <div class="sub">log(P<sub>t</sub>) = log(P<sub>0</sub>) + gt</div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box blue" style="width:290px">
+        <div class="title">Method</div>
+        <div class="sub">
+          Log-transform to linearise exponential growth<br><br>
+          ADF test (original): p = 0.994 → non-stationary<br>
+          First difference Y'<sub>t</sub> = Y<sub>t</sub> − Y<sub>t−1</sub><br>
+          ADF test (differenced): p ≈ 3.7×10⁻⁷ → stationary<br><br>
+          Fit AR(1) on differenced log-pop:<br>
+          Y'<sub>t</sub> = φ·Y'<sub>t−1</sub> + ε<sub>t</sub>,  φ̂ = 0.782
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box red" style="width:290px">
+        <div class="title">Why ARIMA failed — 4 reasons</div>
+        <div class="sub">
+          <b>1. Sample size:</b> n = 26 observations only<br>
+          CI = exp(log P̂ ± 1.96·σ·√t) explodes over 10 yrs<br><br>
+          <b>2. Stationarity assumption violated:</b><br>
+          AR structure assumes linear autocorrelation<br>
+          2008–12 recession suppressed migration by ~70%;<br>
+          post-pandemic rebound created structural break<br><br>
+          <b>3. Homoskedastic errors assumed:</b><br>
+          Migration variance is not constant over time<br><br>
+          <b>4. Scalar series — no demographic insight:</b><br>
+          Treats population as one time series;<br>
+          no age, fertility, or mortality information
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box coral" style="width:290px">
+        <div class="title">Verdict: Rejected</div>
+        <div class="sub">Unstable CI; assumptions violated by structural breaks</div>
+      </div>
+    </div>
+
+    <!-- COL C: COHORT -->
+    <div class="col">
+      <div class="section-label">Model 3</div>
+      <div class="box teal" style="width:290px">
+        <div class="title">Cohort-Component Model</div>
+        <div class="sub">Age-by-age, year-by-year projection</div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box teal" style="width:290px">
+        <div class="title">Core identity</div>
+        <div class="sub">
+          For x ≥ 1:<br>
+          P<sub>x,t+1</sub> = P<sub>x−1,t</sub> − D<sub>x−1,t</sub> + M<sub>x−1,t</sub><br><br>
+          For newborns:<br>
+          P<sub>0,t+1</sub> = B<sub>t</sub><br><br>
+          D<sub>x,t</sub> = m<sub>x</sub>·P<sub>x,t</sub>
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box green" style="width:290px">
+        <div class="title">Advantages over other models</div>
+        <div class="sub">
+          1. Explicit cohort aging — each age group tracked<br>
+          2. Age-specific Gompertz mortality: log(m<sub>x</sub>) = α + βx<br>
+          3. Age-specific fertility: p<sub>a</sub> = w<sub>a</sub>/Σw<sub>a</sub><br>
+          4. Migration uncertainty via σ scenarios: M̄<sub>x</sub> ± kσ<sub>x</sub><br>
+          5. Demographically valid and interpretable<br>
+          6. Validated against observed deaths 2020–2024
+        </div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="box teal" style="width:290px">
+        <div class="title">Verdict: Selected</div>
+        <div class="sub">Final model — 2025–2035 forecast</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- convergence -->
+  <div style="width:960px; height:30px; position:relative; margin:0 auto;">
+    <div style="position:absolute; top:0; left:calc(16.67%); width:1px; height:30px; background:#999;"></div>
+    <div style="position:absolute; top:0; left:50%; width:1px; height:30px; background:#999;"></div>
+    <div style="position:absolute; top:0; left:calc(83.33%); width:1px; height:30px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:calc(16.67%); width:calc(66.66%); height:1px; background:#999;"></div>
+    <div style="position:absolute; top:29px; left:50%; width:1px; height:18px; background:#999;"></div>
+  </div>
+  <div class="arrow-down"></div>
+
+  <div class="box teal" style="width:600px">
+    <div class="title">Final selection: cohort-component model</div>
+    <div class="sub">Projects 86 age cohorts (0–85+) annually from 2025 to 2035<br>
+    Uncertainty captured via 5 migration scenarios: M̄<sub>x</sub> − 2σ, M̄<sub>x</sub> − σ, M̄<sub>x</sub>, M̄<sub>x</sub> + σ, M̄<sub>x</sub> + 2σ</div>
+  </div>
+  <div class="arrow-down"></div>
+
+  <div class="box gray" style="width:700px">
+    <div class="title">Why not extrapolation alone?</div>
+    <div class="sub">
+      Extrapolation gives P<sub>t+1</sub> = P<sub>t</sub>(1 + g) — stable but driven purely by one scalar g.<br>
+      It cannot capture cohort shifts, aging dynamics, or age-varying fertility/mortality.<br>
+      The cohort model is preferred even though extrapolation looked smooth, because demographic validity matters for planning.
+    </div>
+  </div>
+
+  <!-- legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch blue" style="border:1px solid #7baed4;"></div>Model / method</div>
+    <div class="legend-item"><div class="legend-swatch green" style="border:1px solid #6bad3a;"></div>Positive outcome</div>
+    <div class="legend-item"><div class="legend-swatch amber" style="border:1px solid #d4950a;"></div>Limitation</div>
+    <div class="legend-item"><div class="legend-swatch red" style="border:1px solid #d46060;"></div>Failure reasons</div>
+    <div class="legend-item"><div class="legend-swatch coral" style="border:1px solid #d47060;"></div>Rejected</div>
+    <div class="legend-item"><div class="legend-swatch teal" style="border:1px solid #3aad8a;"></div>Selected / final</div>
+  </div>
+</div>
+
+</body>
+</html>
