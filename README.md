@@ -13,6 +13,11 @@ This analysis uses 25 years of historical data (2000-2024) to project the Atlant
 
 ![Model comparison](model_comparison.png)
 
+## Flowcharts
+
+- [Model selection flowchart](index.html)
+- [Cohort-based model pipeline flowchart](cohort_model_pipeline.html)
+
 ### Individual Models
 
 **Model 1: Component Extrapolation**

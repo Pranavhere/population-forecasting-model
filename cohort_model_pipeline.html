@@ -8,19 +8,30 @@
   body { background: #fff; font-family: Arial, sans-serif; padding: 32px; }
   h1 { font-size: 15px; font-weight: 700; color: #1a1a1a; text-align: center; margin-bottom: 5px; }
   h2 { font-size: 11px; font-weight: 400; color: #555; text-align: center; margin-bottom: 30px; }
-  .nav-link { text-align: center; margin: 0 0 24px; }
+  .page-nav {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 24px;
+  }
+  .nav-link {
+    display: inline-block;
+  }
   .nav-link a {
     display: inline-block;
-    padding: 10px 16px;
-    border: 1px solid #8b85cc;
+    padding: 12px 20px;
+    border: 2px solid #5c56a5;
     border-radius: 6px;
     background: #eeedf8;
     color: #1a1a1a;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     text-decoration: none;
   }
   .nav-link a:hover { background: #e4e2f6; }
+  .nav-link a:focus-visible {
+    outline: 3px solid #1a1a1a;
+    outline-offset: 3px;
+  }
 
   /* ── boxes ── */
   .box { border-radius: 6px; padding: 10px 16px; text-align: center; }
@@ -80,9 +91,11 @@
 
 <h1>Cohort-Component Model — Full Pipeline</h1>
 <h2>Atlanta MSA Population Forecast 2025–2035 · Every step with formulas</h2>
-<div class="nav-link">
-  <a href="index.html">Back to Model Selection</a>
-</div>
+<nav class="page-nav" aria-label="Flowchart navigation">
+  <div class="nav-link">
+    <a href="index.html" aria-label="Return to the model selection flowchart">Back to the Model Selection Flowchart</a>
+  </div>
+</nav>
 
 <div class="flow">
 

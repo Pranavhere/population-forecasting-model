@@ -8,19 +8,30 @@
   body { background: #fff; font-family: Arial, sans-serif; padding: 32px; }
   h1 { font-size: 15px; font-weight: 700; color: #1a1a1a; text-align: center; margin-bottom: 6px; }
   h2 { font-size: 11px; font-weight: 400; color: #555; text-align: center; margin-bottom: 28px; }
-  .nav-link { text-align: center; margin: 0 0 24px; }
+  .page-nav {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 24px;
+  }
+  .nav-link {
+    display: inline-block;
+  }
   .nav-link a {
     display: inline-block;
-    padding: 10px 16px;
-    border: 1px solid #7baed4;
+    padding: 12px 20px;
+    border: 2px solid #2f6ea3;
     border-radius: 6px;
     background: #e6f0fb;
     color: #1a1a1a;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     text-decoration: none;
   }
   .nav-link a:hover { background: #d7e8fb; }
+  .nav-link a:focus-visible {
+    outline: 3px solid #1a1a1a;
+    outline-offset: 3px;
+  }
 
   .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
 
@@ -102,9 +113,11 @@
 
 <h1>Model Selection Rationale — Atlanta MSA 10-Year Population Forecast</h1>
 <h2>Why the cohort-component model was chosen over component extrapolation and ARIMA</h2>
-<div class="nav-link">
-  <a href="cohort_model_pipeline.html">Go to the Cohort-Based Model Pipeline</a>
-</div>
+<nav class="page-nav" aria-label="Flowchart navigation">
+  <div class="nav-link">
+    <a href="cohort_model_pipeline.html" aria-label="Open the cohort-based model pipeline flowchart">Open the Cohort-Based Model Pipeline Flowchart</a>
+  </div>
+</nav>
 
 <div class="flow">
 
