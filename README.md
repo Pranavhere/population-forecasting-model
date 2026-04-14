@@ -15,8 +15,8 @@ This analysis uses 25 years of historical data (2000-2024) to project the Atlant
 
 ## Flowcharts
 
-- [Model selection flowchart](index.html)
-- [Cohort-based model pipeline flowchart](cohort_model_pipeline.html)
+- [Model selection flowchart](https://pranavhere.github.io/population-forecasting-model/)
+- [Cohort-based model pipeline flowchart](https://pranavhere.github.io/population-forecasting-model/cohort_model_pipeline.html)
 
 ### Individual Models
 
