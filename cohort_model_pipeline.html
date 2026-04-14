@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cohort-Component Model Pipeline — Atlanta MSA</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; font-family: Arial, sans-serif; padding: 32px; }
+  h1 { font-size: 15px; font-weight: 700; color: #1a1a1a; text-align: center; margin-bottom: 5px; }
+  h2 { font-size: 11px; font-weight: 400; color: #555; text-align: center; margin-bottom: 30px; }
+
+  /* ── boxes ── */
+  .box { border-radius: 6px; padding: 10px 16px; text-align: center; }
+  .box .title { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+  .box .sub   { font-size: 10.5px; font-weight: 400; color: #333; line-height: 1.6; text-align: left; }
+  .box .sub.center { text-align: center; }
+
+  /* colors */
+  .gray   { background:#f0eeea; border:1px solid #bbb; }
+  .blue   { background:#e6f0fb; border:1px solid #7baed4; }
+  .green  { background:#e8f4de; border:1px solid #6bad3a; }
+  .amber  { background:#fef3d8; border:1px solid #d4950a; }
+  .teal   { background:#e0f4ee; border:1px solid #3aad8a; }
+  .purple { background:#eeedf8; border:1px solid #8b85cc; }
+  .red    { background:#fdeaea; border:1px solid #d46060; }
+
+  /* arrows */
+  .arr { width:2px; height:20px; background:#999; margin:0 auto; position:relative; }
+  .arr::after { content:''; position:absolute; bottom:-1px; left:-4px;
+    border-left:5px solid transparent; border-right:5px solid transparent; border-top:8px solid #999; }
+
+  /* layout */
+  .flow { display:flex; flex-direction:column; align-items:center; }
+  .section-label {
+    font-size:10px; font-weight:700; color:#777; letter-spacing:.08em; text-transform:uppercase;
+    border-top:1px solid #ddd; padding-top:6px; margin:6px 0 10px; text-align:center; width:100%;
+  }
+
+  /* three-branch layout */
+  .branches { display:flex; gap:18px; align-items:flex-start; width:960px; }
+  .branch { display:flex; flex-direction:column; align-items:center; flex:1; }
+
+  /* splitter graphic */
+  .split-down { width:1px; height:22px; background:#999; margin:0 auto; }
+  .split-h { background:#999; height:1px; }
+
+  /* loop box */
+  .loop-box { border-radius:6px; padding:10px 16px; text-align:center; border:2px dashed #8b85cc; background:#f5f4fc; }
+  .loop-box .title { font-size:12px; font-weight:700; color:#3c3489; margin-bottom:3px; }
+  .loop-box .sub   { font-size:10.5px; color:#534ab7; line-height:1.5; }
+
+  /* scenario boxes inline */
+  .scenarios { display:flex; gap:10px; width:960px; }
+  .scen { flex:1; border-radius:6px; padding:10px 8px; text-align:center; }
+  .scen .stitle { font-size:11px; font-weight:700; margin-bottom:4px; }
+  .scen .ssub   { font-size:10px; line-height:1.5; }
+  .s-vl  { background:#fdeaea; border:1px solid #d46060; }
+  .s-l   { background:#fce8e0; border:1px solid #d47060; }
+  .s-b   { background:#e0f4ee; border:1px solid #3aad8a; }
+  .s-h   { background:#e8f4de; border:1px solid #6bad3a; }
+  .s-vh  { background:#d4f0e4; border:1px solid #3a9a6a; }
+
+  @media print { body { padding:8px; } .branches, .scenarios { width:100%; } }
+</style>
+</head>
+<body>
+
+<h1>Cohort-Component Model — Full Pipeline</h1>
+<h2>Atlanta MSA Population Forecast 2025–2035 · Every step with formulas</h2>
+
+<div class="flow">
+
+<!-- ══════════════════════════════════════════
+     SEC 1 — DATA LOADING
+══════════════════════════════════════════ -->
+<div class="section-label">Section 1 — Data loading and filtering</div>
+
+<div class="box gray" style="width:480px">
+  <div class="title">Load Excel workbook</div>
+  <div class="sub center">Final_Data_for_Modeling.xlsx · 3 sheets</div>
+</div>
+<div class="arr"></div>
+
+<!-- three sheets -->
+<div style="width:960px;position:relative;height:20px;">
+  <div style="position:absolute;top:0;left:50%;width:1px;height:20px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:20%;right:20%;height:1px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:20%;width:1px;height:14px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:50%;width:1px;height:14px;background:#999;"></div>
+  <div style="position:absolute;top:19px;right:20%;width:1px;height:14px;background:#999;"></div>
+</div>
+
+<div style="display:flex;gap:18px;width:960px;margin-top:0;">
+  <div class="box gray" style="flex:1;">
+    <div class="title">pop_estimate_components</div>
+    <div class="sub">Annual: YEAR, POP_ESTIMATE, BIRTHS, DEATHS,<br>INTERNATIONAL_MIG, DOMESTIC_MIG, NET_MIG, RESIDUAL<br>Coverage: 2000–2025</div>
+  </div>
+  <div class="box gray" style="flex:1;">
+    <div class="title">pop_by_agesex</div>
+    <div class="sub">Age × sex panel: YEAR (code 1–6), AGE (0–85),<br>TOT_POP, TOT_MALE, TOT_FEMALE<br>Coverage: 2019–2024 (codes → calendar years)</div>
+  </div>
+  <div class="box gray" style="flex:1;">
+    <div class="title">mortality_rate_2020_census</div>
+    <div class="sub">National 2020 Census: age, total resident population,<br>births, deaths by single year of age<br>Used for Gompertz mortality estimation</div>
+  </div>
+</div>
+
+<div class="arr"></div>
+<div class="box purple" style="width:600px">
+  <div class="title">Filter and align</div>
+  <div class="sub center">CBSA = 12060 (Atlanta MSA only) · YEAR codes mapped: code + 2018 → calendar year<br>Panel indexed by (YEAR, AGE) — 86 age groups × 5 years = 430 rows</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEC 2 — THREE PARALLEL PIPELINES
+══════════════════════════════════════════ -->
+<div class="arr"></div>
+<div class="section-label">Section 2 — Three parallel estimation pipelines (run independently, merged before projection)</div>
+
+<!-- splitter into 3 branches -->
+<div style="width:960px;position:relative;height:20px;">
+  <div style="position:absolute;top:0;left:50%;width:1px;height:20px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:16%;right:16%;height:1px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:16%;width:1px;height:14px;background:#999;"></div>
+  <div style="position:absolute;top:19px;left:50%;width:1px;height:14px;background:#999;"></div>
+  <div style="position:absolute;top:19px;right:16%;width:1px;height:14px;background:#999;"></div>
+</div>
+
+<div class="branches">
+
+  <!-- BRANCH A: FERTILITY -->
+  <div class="branch">
+    <div class="section-label">A — Fertility</div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Define age-group fertility weights w<sub>a</sub></div>
+      <div class="sub">
+        Ages 15–19: w = 0.025 (low, teen fertility)<br>
+        Ages 20–24: w = 0.200<br>
+        Ages 25–29: w = 0.300 (peak fertility)<br>
+        Ages 30–34: w = 0.250<br>
+        Ages 35–39: w = 0.150<br>
+        Ages 40–44: w = 0.050<br>
+        Ages 45–49: w = 0.025 (decline)
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Normalise to probabilities p<sub>a</sub></div>
+      <div class="sub">
+        p<sub>a</sub> = w<sub>a</sub> / Σw<sub>a</sub><br>
+        Property: Σp<sub>a</sub> = 1<br><br>
+        Expand 5-yr group probabilities to single-year ages within [15, 49]<br>
+        (each age in a group inherits the group's p<sub>a</sub>)
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Merge with female population F<sub>a,t</sub></div>
+      <div class="sub">
+        Use F<sub>a,2020</sub> from pop_by_agesex (YEAR=2020)<br>
+        Restrict to ages a ∈ [15, 49]<br><br>
+        Weighted fertile population:<br>
+        W = Σ<sub>a</sub> (F<sub>a</sub> · p<sub>a</sub>)<br><br>
+        Higher-fertility ages (25–34) contribute more to W
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Calibrate scaling factor k</div>
+      <div class="sub">
+        k = B<sub>obs</sub> / W<br><br>
+        B<sub>obs</sub> = observed births from pop_estimate_components<br><br>
+        Metro estimate: k ≈ 0.325<br>
+        National proxy check: k ≈ 0.334<br>
+        Close agreement validates metro ≈ national fertility
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box green" style="width:295px">
+      <div class="title">Birth formula (used each projection year)</div>
+      <div class="sub">
+        B<sub>t</sub> = k · Σ<sub>a∈[15,49]</sub> (F<sub>a,t−1</sub> · p<sub>a</sub>)<br><br>
+        B<sub>t</sub> assigned to P<sub>0,t</sub> (age 0 entry)<br>
+        F<sub>a,t−1</sub> from previous year — births lag female pop by 1 yr
+      </div>
+    </div>
+  </div>
+
+  <!-- BRANCH B: MORTALITY -->
+  <div class="branch">
+    <div class="section-label">B — Mortality (Gompertz)</div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Compute observed death rates d<sub>a</sub></div>
+      <div class="sub">
+        d<sub>a</sub> = Deaths<sub>a</sub> / Pop<sub>a</sub><br><br>
+        Source: 2020 Census national mortality table<br>
+        Covers ages 0–75 from observed data<br>
+        Metro mortality ≈ national mortality (reasonable for large MSA)
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Log-transform (Gompertz linearisation)</div>
+      <div class="sub">
+        Empirical mortality rises exponentially with age:<br>
+        m<sub>x</sub> ≈ A·e<sup>βx</sup>  (Gompertz law)<br><br>
+        Taking log linearises:<br>
+        log(d<sub>a</sub>) = α + β·a<br><br>
+        Allows OLS regression on log scale
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">OLS fit on ages 50–75</div>
+      <div class="sub">
+        Fit: log(m<sub>x</sub>) = α̂ + β̂·x<br>
+        Fitted parameters: β̂ = 0.0621, α̂ = −5.584<br><br>
+        Interpretation: mortality doubles every<br>
+        ln(2)/β̂ ≈ 11 years of age<br><br>
+        Smoothed rate: m̂<sub>x</sub> = e<sup>(α̂ + β̂x)</sup>
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Extrapolate ages 76–84 and 85+</div>
+      <div class="sub">
+        Ages 76–84: predict via fitted Gompertz model<br>
+        m̂<sub>x</sub> = e<sup>(α̂ + β̂x)</sup> for x = 76, 77, …, 84<br><br>
+        Age 85+ (open-ended group):<br>
+        Use representative age = 88 in the model<br>
+        m̂<sub>85+</sub> = e<sup>(α̂ + β̂·88)</sup>
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Incremental cohort mortality m(x)</div>
+      <div class="sub">
+        m(0) = m̂<sub>0</sub><br>
+        m(x) = m̂<sub>x</sub> − m̂<sub>x−1</sub>  for x ≥ 1<br><br>
+        Captures marginal mortality risk increase from one age to the next<br>
+        Used in cohort transition: D<sub>x,t</sub> = m(x) · P<sub>x,t</sub>
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box green" style="width:295px">
+      <div class="title">Validation passed</div>
+      <div class="sub">
+        Σ<sub>x</sub> m(x)·P<sub>x,t</sub> ≈ observed total deaths<br>
+        Years 2020–2024 all within acceptable range<br>
+        Confirms Gompertz extrapolation is valid for this MSA
+      </div>
+    </div>
+  </div>
+
+  <!-- BRANCH C: MIGRATION -->
+  <div class="branch">
+    <div class="section-label">C — Migration</div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Compute annual migration differential</div>
+      <div class="sub">
+        DIFF<sub>t</sub> = NET_MIG<sub>t</sub> + RESIDUAL<sub>t</sub><br><br>
+        NET_MIG = domestic + international migration<br>
+        RESIDUAL = unexplained pop change component<br><br>
+        Historical range: ~22K (2011) to ~120K (2006)<br>
+        Covers 2000–2024 (26 years)
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Age-specific population weights w<sub>x,t</sub></div>
+      <div class="sub">
+        Total population per year:<br>
+        N<sub>t</sub> = Σ<sub>x</sub> P<sub>x,t</sub><br><br>
+        Age weight:<br>
+        w<sub>x,t</sub> = P<sub>x,t</sub> / N<sub>t</sub><br><br>
+        Age-weighted migration:<br>
+        M<sub>x,t</sub> = w<sub>x,t</sub> · DIFF<sub>t</sub><br><br>
+        Distributes total migration proportionally by age share
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Per-age mean and std (2000–2024)</div>
+      <div class="sub">
+        M̄<sub>x</sub> = E[M<sub>x,t</sub>]  across all historical years<br>
+        σ<sub>x</sub> = std[M<sub>x,t</sub>]  across all historical years<br><br>
+        M̄<sub>x</sub> used as baseline in projection<br>
+        σ<sub>x</sub> used to construct uncertainty scenarios<br><br>
+        Future migration assumed to revert to historical mean
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box blue" style="width:295px">
+      <div class="title">Female ratio for sex split</div>
+      <div class="sub">
+        From 2021–2024 data, ages 15–49:<br>
+        Female ratio = Σ TOT_FEMALE / Σ TOT_POP<br>
+        ≈ 0.511  (stable across years)<br><br>
+        Applied each projection year:<br>
+        F<sub>t</sub> = 0.511 · P<sub>t</sub><br>
+        M<sub>t</sub> = P<sub>t</sub> − F<sub>t</sub>
+      </div>
+    </div>
+    <div class="arr"></div>
+
+    <div class="box green" style="width:295px">
+      <div class="title">Age-85+ geometric growth rate g<sub>85</sub></div>
+      <div class="sub">
+        Open-ended group cannot be modelled by cohort shift<br><br>
+        Geometric trend from observed data:<br>
+        g<sub>85</sub> = (P<sub>85,2024</sub>/P<sub>85,2020</sub>)<sup>1/4</sup> − 1<br><br>
+        Applied each year:<br>
+        P<sub>85,t</sub> = P<sub>85,t−1</sub> · (1 + g<sub>85</sub>)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- converge three branches -->
+<div style="width:960px;position:relative;height:24px;margin-top:0;">
+  <div style="position:absolute;top:0;left:16%;width:1px;height:24px;background:#999;"></div>
+  <div style="position:absolute;top:0;left:50%;width:1px;height:24px;background:#999;"></div>
+  <div style="position:absolute;top:0;right:16%;width:1px;height:24px;background:#999;"></div>
+  <div style="position:absolute;top:23px;left:16%;right:16%;height:1px;background:#999;"></div>
+  <div style="position:absolute;top:23px;left:50%;width:1px;height:14px;background:#999;"></div>
+</div>
+<div class="arr"></div>
+
+<div class="box purple" style="width:640px">
+  <div class="title">Merge all three pipelines into projection panel</div>
+  <div class="sub center">
+    Panel: (YEAR, AGE) → TOT_POP, TOT_FEMALE, mortality_rate, fertility_prop, avg_ageweighted_diff, std_ageweighted_diff<br>
+    Historical years 2020–2024 populated · Future years 2025–2035 initialised as NaN, filled by loop
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEC 3 — PROJECTION LOOP
+══════════════════════════════════════════ -->
+<div class="arr"></div>
+<div class="section-label">Section 3 — Annual projection loop</div>
+
+<div class="loop-box" style="width:640px">
+  <div class="title">for t = 2025, 2026, … 2035  (iterate over all ages x = 0, 1, … 85)</div>
+  <div class="sub">Uses output of year t−1 as input · 5 steps per year</div>
+</div>
+<div class="arr"></div>
+
+<div class="box blue" style="width:640px">
+  <div class="title">Step 1 — Births (age-0 cohort entry)</div>
+  <div class="sub center">
+    B<sub>t</sub> = k · Σ<sub>a∈[15,49]</sub> (F<sub>a,t−1</sub> · p<sub>a</sub>)<br>
+    Set P<sub>0,t</sub> = B<sub>t</sub> · female ratio determines F<sub>0,t</sub> and M<sub>0,t</sub>
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="box blue" style="width:640px">
+  <div class="title">Step 2 — Cohort aging (ages x = 1 to 84)</div>
+  <div class="sub center">
+    P<sub>x,t</sub> = P<sub>x−1,t−1</sub> − m(x−1)·P<sub>x−1,t−1</sub> + M̄<sub>x−1</sub><br><br>
+    Each cohort shifts forward one age · Deaths subtracted using incremental mortality m(x) · Mean migration added
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="box blue" style="width:640px">
+  <div class="title">Step 3 — Age 85+ (open-ended group)</div>
+  <div class="sub center">
+    P<sub>85,t</sub> = P<sub>85,t−1</sub> · (1 + g<sub>85</sub>)<br>
+    Geometric extrapolation — open interval cannot receive a cohort shift from age 84
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="box blue" style="width:640px">
+  <div class="title">Step 4 — Sex split</div>
+  <div class="sub center">
+    F<sub>x,t</sub> = 0.511 · P<sub>x,t</sub> &nbsp;&nbsp; M<sub>x,t</sub> = P<sub>x,t</sub> − F<sub>x,t</sub><br>
+    Applied uniformly across all ages · Ratio validated as stable (2021–2024)
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="box blue" style="width:640px">
+  <div class="title">Step 5 — Record deaths for this year</div>
+  <div class="sub center">
+    D<sub>x,t</sub> = m(x) · P<sub>x,t</sub><br>
+    Stored for output and validation · Not fed back into next iteration (deaths already subtracted in Step 2)
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="loop-box" style="width:640px">
+  <div class="title">↺  t = t + 1  →  return to loop start if t ≤ 2035</div>
+  <div class="sub">Output of year t becomes input P<sub>x,t−1</sub> for year t+1</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEC 4 — UNCERTAINTY SCENARIOS
+══════════════════════════════════════════ -->
+<div class="arr"></div>
+<div class="section-label">Section 4 — Uncertainty scenarios (migration is the dominant source of variance)</div>
+
+<div class="box amber" style="width:640px">
+  <div class="title">Why migration drives uncertainty</div>
+  <div class="sub center">
+    Fertility and mortality patterns are relatively stable year-to-year<br>
+    Migration fluctuated from ~22K (2011 recession trough) to ~120K (2006 boom) — a 5× swing<br>
+    σ<sub>x</sub> from the historical distribution is used to construct plausible future bounds
+  </div>
+</div>
+<div class="arr"></div>
+
+<div class="scenarios">
+  <div class="scen s-vl">
+    <div class="stitle" style="color:#791f1f;">Very low</div>
+    <div class="ssub" style="color:#a32d2d;">
+      M̄<sub>x</sub> − 2σ<sub>x</sub><br><br>
+      Severe sustained out-migration scenario<br>
+      2035 population: ~6.69M
+    </div>
+  </div>
+  <div class="scen s-l">
+    <div class="stitle" style="color:#712b13;">Low</div>
+    <div class="ssub" style="color:#993c1d;">
+      M̄<sub>x</sub> − σ<sub>x</sub><br><br>
+      Below-average migration<br>
+      2035 population: ~6.88M
+    </div>
+  </div>
+  <div class="scen s-b">
+    <div class="stitle" style="color:#085041;">Base</div>
+    <div class="ssub" style="color:#0f6e56;">
+      M̄<sub>x</sub><br><br>
+      Historical average migration<br>
+      2035 population: ~7.07M
+    </div>
+  </div>
+  <div class="scen s-h">
+    <div class="stitle" style="color:#27500a;">High</div>
+    <div class="ssub" style="color:#3b6d11;">
+      M̄<sub>x</sub> + σ<sub>x</sub><br><br>
+      Above-average migration<br>
+      2035 population: ~7.26M
+    </div>
+  </div>
+  <div class="scen s-vh">
+    <div class="stitle" style="color:#173404;">Very high</div>
+    <div class="ssub" style="color:#27500a;">
+      M̄<sub>x</sub> + 2σ<sub>x</sub><br><br>
+      Sustained high in-migration<br>
+      2035 population: ~7.45M
+    </div>
+  </div>
+</div>
+
+<div class="arr"></div>
+
+<!-- ══════════════════════════════════════════
+     SEC 5 — OUTPUT
+══════════════════════════════════════════ -->
+<div class="section-label">Section 5 — Outputs</div>
+
+<div style="display:flex;gap:18px;width:960px;">
+  <div class="box teal" style="flex:1;">
+    <div class="title">Population totals 2025–2035</div>
+    <div class="sub">
+      Annual Σ<sub>x</sub> P<sub>x,t</sub> for base and all scenarios<br>
+      Base: 6.49M (2025) → 7.07M (2035)<br>
+      Decade increase ≈ 580,000 (base scenario)<br>
+      Saved to population_forecast.xlsx
+    </div>
+  </div>
+  <div class="box teal" style="flex:1;">
+    <div class="title">Forecast fan chart</div>
+    <div class="sub">
+      Historical Census (2000–2024) + base forecast<br>
+      ±1σ shaded band (dark)<br>
+      ±2σ shaded band (light)<br>
+      Bands widen over time — compounding migration variance
+    </div>
+  </div>
+  <div class="box teal" style="flex:1;">
+    <div class="title">Log mortality chart</div>
+    <div class="sub">
+      Observed log(d<sub>a</sub>) scatter vs age<br>
+      Fitted Gompertz line: y = 0.0621x − 5.584<br>
+      Extrapolated segment beyond age 75 shown<br>
+      Validates β̂ = 0.0621 (doubles every ≈11 yrs)
+    </div>
+  </div>
+</div>
+
+<div class="arr"></div>
+
+<div class="box gray" style="width:640px">
+  <div class="title">Key assumptions summary</div>
+  <div class="sub">
+    · Fertility: metro ≈ national pattern (validated: k<sub>metro</sub> ≈ k<sub>national</sub>)<br>
+    · Mortality: metro ≈ national; Gompertz extrapolation for ages 76+ (validated vs. observed deaths)<br>
+    · Migration: reverts to 2000–2024 historical mean; uncertainty from σ across that period<br>
+    · Female ratio: stable at 0.511 through projection horizon<br>
+    · Age 85+: geometric trend g<sub>85</sub> from 2020–2024; no cohort-specific mortality modelled
+  </div>
+</div>
+
+<div class="arr"></div>
+
+<div class="box gray" style="width:480px;border-radius:24px;">
+  <div class="title">10-year forecast complete — 2025–2035</div>
+</div>
+
+</div><!-- end .flow -->
+</body>
+</html>
