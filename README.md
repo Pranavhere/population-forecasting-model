@@ -37,11 +37,15 @@ Fits an autoregressive model to logged population. Learns from recent trends but
 
 **Model 3: Cohort-Component (Recommended)**
 
-Tracks age cohorts separately using fertility, mortality (Gompertz), and migration assumptions. More flexible and arguably more realistic for medium-term planning.
+Tracks age cohorts separately using fertility, mortality (Gompertz), and migration assumptions. More flexible and arguably more realistic for medium-term planning. We run five migration scenarios (base ±1σ ±2σ) to show the plausible range.
 
-- 2035 base scenario: **6.79M**
-- Range across 5 migration scenarios: 6.42M – 7.40M
-- Captures age structure shifts and allows scenario analysis
+![Model 3](model3_forecast.png)
+
+- 2035 base forecast: **7.05M**
+- ±1σ scenario band: 6.85M – 7.25M (67% likely range)
+- ±2σ scenario band: 6.65M – 7.44M (95% plausible range)
+- Natural increase (births–deaths) is stable; migration varies with economic conditions
+- Scenarios capture uncertainty in net domestic and international migration
 
 ## What Drives the Differences?
 
