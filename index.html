@@ -11,6 +11,8 @@
   .page-nav {
     display: flex;
     justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
     margin: 0 0 24px;
   }
   .nav-link {
@@ -114,6 +116,9 @@
 <h1>Model Selection Rationale — Atlanta MSA 10-Year Population Forecast</h1>
 <h2>Why the cohort-component model was chosen over component extrapolation and ARIMA</h2>
 <nav class="page-nav" aria-label="Flowchart navigation">
+  <div class="nav-link">
+    <a href="popforecast.html" aria-label="Open the full notebook with explanations">Open the Full Notebook with Explanations</a>
+  </div>
   <div class="nav-link">
     <a href="cohort_model_pipeline.html" aria-label="Open the cohort-based model pipeline flowchart">Open the Cohort-Based Model Pipeline Flowchart</a>
   </div>
