@@ -13,6 +13,12 @@ This analysis uses 25 years of historical data (2000-2024) to project the Atlant
 
 ![Model comparison](model_comparison.png)
 
+## Full Notebook
+
+The complete notebook, including explanations, formulas, charts, and code, is available as a hosted HTML page on GitHub Pages:
+
+- [Open the full annotated notebook](https://pranavhere.github.io/population-forecasting-model/popforecast.html)
+
 ## Flowcharts
 
 - [Model selection flowchart](https://pranavhere.github.io/population-forecasting-model/)
@@ -63,6 +69,7 @@ Tracks age cohorts separately using fertility, mortality (Gompertz), and migrati
 ## What's in here
 
 - **popforecast.ipynb** — Notebook with all three models, step-by-step math, and full code
+- **popforecast.html** — Hosted HTML version of the notebook for easy reading on GitHub Pages
 - **model[1-3]_*.py** — Individual model implementations
 - **Final_Data_for_Modeling.xlsx** — Historical annual population, births, deaths, migration
 - **population_forecast.xlsx** — Model outputs and scenarios
