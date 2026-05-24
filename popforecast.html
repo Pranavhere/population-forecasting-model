@@ -7547,8 +7547,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
@@ -7557,7 +7556,6 @@ a.anchor-link {
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
 
-<span class="c1"># Configuration</span>
 <span class="n">excel_file</span> <span class="o">=</span> <span class="s1">'/Users/pranavlakhotia/Downloads/Final_Data_for_Modeling.xlsx'</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading data from: </span><span class="si">{</span><span class="n">excel_file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -7606,20 +7604,16 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load Excel file</span>
-<span class="n">xls</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="n">excel_file</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">xls</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="n">excel_file</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Available sheets: </span><span class="si">{</span><span class="n">xls</span><span class="o">.</span><span class="n">sheet_names</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Load all sheets</span>
 <span class="n">pop_estimate_components</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'pop_estimate_components'</span><span class="p">)</span>
 <span class="n">pop_by_agesex</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'pop_by_agesex'</span><span class="p">)</span>
 <span class="n">mortality_rate_2020_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'mortality_rate_2020_census'</span><span class="p">)</span>
 
-<span class="c1"># Filter for Atlanta MSA (CBSA 12060)</span>
 <span class="n">pop_estimate_components</span> <span class="o">=</span> <span class="n">pop_estimate_components</span><span class="p">[</span><span class="n">pop_estimate_components</span><span class="p">[</span><span class="s2">"CBSA"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12060</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">pop_by_agesex</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"CBSA"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12060</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-<span class="c1"># Map YEAR codes to calendar years (1=2019, 2=2020, ..., 6=2024)</span>
 <span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2018</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Data loaded and filtered for Atlanta MSA</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
@@ -7833,14 +7827,12 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Prepare time series and convert counts to rates</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pop_estimate_components</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pop_estimate_components</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"YEAR"</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Time series period: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'YEAR'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'YEAR'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total observations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Calculate RATES (normalized by population)</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"birth_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"BIRTHS"</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"DEATHS"</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"int_mig_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"INTERNATIONAL_MIG"</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span>
@@ -7964,8 +7956,7 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Apply rolling window (10-year) to compute mean and std</span>
-<span class="n">window</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">rates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"birth_rate"</span><span class="p">,</span> <span class="s2">"death_rate"</span><span class="p">,</span> <span class="s2">"int_mig_rate"</span><span class="p">,</span> <span class="s2">"dom_mig_rate"</span><span class="p">,</span> <span class="s2">"res_rate"</span><span class="p">]</span>
 
 <span class="n">means</span> <span class="o">=</span> <span class="p">{}</span>
@@ -8054,16 +8045,14 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 1: COMPONENT EXTRAPOLATION</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 1: COMPONENT EXTRAPOLATION"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
-<span class="c1"># Calculate total growth rate and uncertainty via variance propagation</span>
 <span class="n">var_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">stds</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rates</span><span class="p">)</span>
 <span class="n">sigma_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_total</span><span class="p">)</span>
 
-<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">means</span><span class="p">[</span><span class="s2">"birth_rate"</span><span class="p">]</span> <span class="o">-</span> <span class="n">means</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">]</span> <span class="o">+</span> 
+<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">means</span><span class="p">[</span><span class="s2">"birth_rate"</span><span class="p">]</span> <span class="o">-</span> <span class="n">means</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">]</span> <span class="o">+</span>
      <span class="n">means</span><span class="p">[</span><span class="s2">"int_mig_rate"</span><span class="p">]</span> <span class="o">+</span> <span class="n">means</span><span class="p">[</span><span class="s2">"dom_mig_rate"</span><span class="p">]</span> <span class="o">+</span> <span class="n">means</span><span class="p">[</span><span class="s2">"res_rate"</span><span class="p">])</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Total growth rate g:         </span><span class="si">{</span><span class="n">g</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2"> (per capita per year)"</span><span class="p">)</span>
@@ -8073,7 +8062,6 @@ $$</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  • ±1σ range: [</span><span class="si">{</span><span class="p">(</span><span class="n">g</span><span class="o">-</span><span class="n">sigma_g</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">%, </span><span class="si">{</span><span class="p">(</span><span class="n">g</span><span class="o">+</span><span class="n">sigma_g</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">%]"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  • ±2σ range: [</span><span class="si">{</span><span class="p">(</span><span class="n">g</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_g</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">%, </span><span class="si">{</span><span class="p">(</span><span class="n">g</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_g</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">%] (95% CI)"</span><span class="p">)</span>
 
-<span class="c1"># Extract baseline </span>
 <span class="n">last_year</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">last_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Baseline year: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">last_year</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -8141,8 +8129,7 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 1: PROJECT (Component Extrapolation)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Projection: 10-year forward (2025-2035)"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Projection: 10-year forward (2025-2035)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
 <span class="n">forecast_years</span> <span class="o">=</span> <span class="mi">10</span>
@@ -8152,23 +8139,20 @@ $$</p>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">forecast_years</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
     <span class="n">year</span> <span class="o">=</span> <span class="n">last_year</span> <span class="o">+</span> <span class="n">i</span>
     <span class="n">next_pop</span> <span class="o">=</span> <span class="n">current_pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g</span><span class="p">)</span>
-    
-    <span class="c1"># Time-dependent uncertainty</span>
+
     <span class="n">sigma_t</span> <span class="o">=</span> <span class="n">sigma_g</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    
-    <span class="c1"># Population confidence intervals</span>
+
     <span class="n">pop_1s_up</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sigma_t</span><span class="p">)</span>
     <span class="n">pop_1s_low</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigma_t</span><span class="p">)</span>
     <span class="n">pop_2s_up</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_t</span><span class="p">)</span>
     <span class="n">pop_2s_low</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_t</span><span class="p">)</span>
-    
-    <span class="c1"># Component point estimates</span>
+
     <span class="n">births</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="n">means</span><span class="p">[</span><span class="s2">"birth_rate"</span><span class="p">]</span>
     <span class="n">deaths</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="n">means</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">]</span>
     <span class="n">int_mig</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="n">means</span><span class="p">[</span><span class="s2">"int_mig_rate"</span><span class="p">]</span>
     <span class="n">dom_mig</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="n">means</span><span class="p">[</span><span class="s2">"dom_mig_rate"</span><span class="p">]</span>
     <span class="n">residual</span> <span class="o">=</span> <span class="n">next_pop</span> <span class="o">*</span> <span class="n">means</span><span class="p">[</span><span class="s2">"res_rate"</span><span class="p">]</span>
-    
+
     <span class="n">results_model1</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
         <span class="s2">"YEAR"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">),</span>
         <span class="s2">"POP_ESTIMATE"</span><span class="p">:</span> <span class="n">next_pop</span><span class="p">,</span>
@@ -8182,7 +8166,7 @@ $$</p>
         <span class="s2">"DOM_MIG"</span><span class="p">:</span> <span class="n">dom_mig</span><span class="p">,</span>
         <span class="s2">"RESIDUAL"</span><span class="p">:</span> <span class="n">residual</span>
     <span class="p">})</span>
-    
+
     <span class="n">current_pop</span> <span class="o">=</span> <span class="n">next_pop</span>
 
 <span class="n">model1_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_model1</span><span class="p">)</span>
@@ -8240,41 +8224,32 @@ Model 1 Results (select years):
 <div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 1 VISUALIZATION</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 1: VISUALIZATION"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
-<span class="c1"># Historical data</span>
 <span class="n">hist_years</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">hist_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># Plot confidence bands FIRST (95% CI outer, then 67% CI inner)</span>
-<span class="c1"># 95% Confidence Interval (±2σ) - lighter shade</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_UP"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_UP"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'95% CI (±2σ)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
 
-<span class="c1"># 67% Confidence Interval (±1σ) - darker shade</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_UP"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_UP"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'67% CI (±1σ)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
 
-<span class="c1"># Add border lines for the bands to make them more distinct</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_LOW"</span><span class="p">],</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_UP"</span><span class="p">],</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_LOW"</span><span class="p">],</span> <span class="s1">'-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_UP"</span><span class="p">],</span> <span class="s1">'-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Plot historical data</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical Data (2000-2024)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="c1"># Plot forecast point estimate with smooth connection to historical data</span>
 <span class="n">forecast_years_extended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">forecast_pop_extended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_pop</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_years_extended</span><span class="p">,</span> <span class="n">forecast_pop_extended</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkred'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Forecast (2025-2035)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="c1"># Formatting</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Model 1: Component Extrapolation - Population Forecast with Confidence Bands'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Year'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Population'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
@@ -8282,7 +8257,6 @@ Model 1 Results (select years):
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Set x-axis limits</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2035</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -8380,24 +8354,20 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 2: ARIMA</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 2: ARIMA (Log-Transformed Population)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
-<span class="c1"># Build time series with log transform</span>
 <span class="n">ts_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">ts_df</span><span class="p">[</span><span class="s2">"log_pop"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">])</span>
 <span class="n">series</span> <span class="o">=</span> <span class="n">ts_df</span><span class="p">[</span><span class="s2">"log_pop"</span><span class="p">]</span>
 
-<span class="c1"># Test 1: ADF on original log-population</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 1: ADF Test on Original Log-Population ---"</span><span class="p">)</span>
 <span class="n">adf_original</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ADF Statistic:    </span><span class="si">{</span><span class="n">adf_original</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-value:          </span><span class="si">{</span><span class="n">adf_original</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result:           </span><span class="si">{</span><span class="s1">'Non-stationary (p &gt; 0.05)'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">adf_original</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Stationary (p &lt; 0.05)'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Apply first differencing</span>
 <span class="n">ts_diff</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 2: ADF Test After First Differencing ---"</span><span class="p">)</span>
 <span class="n">adf_diff</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">ts_diff</span><span class="p">)</span>
@@ -8472,8 +8442,7 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Fit ARIMA(1,1,0)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 3: Fit ARIMA(1,1,0) Model ---"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 3: Fit ARIMA(1,1,0) Model ---"</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -8482,7 +8451,6 @@ $$</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"BIC: </span><span class="si">{</span><span class="n">model_fit</span><span class="o">.</span><span class="n">bic</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log-Likelihood: </span><span class="si">{</span><span class="n">model_fit</span><span class="o">.</span><span class="n">llf</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Extract AR coefficient</span>
 <span class="n">phi</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">'ar.L1'</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Estimated Parameters:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  φ (AR coefficient):  </span><span class="si">{</span><span class="n">phi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -8545,17 +8513,14 @@ $$</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 4: Generate 10-Step Forecast (2025-2035) ---"</span><span class="p">)</span>
 
-<span class="c1"># Forecast steps ahead</span>
 <span class="n">forecast_steps</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">forecast</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="n">forecast_steps</span><span class="p">)</span>
 <span class="n">forecast_df</span> <span class="o">=</span> <span class="n">forecast</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">()</span>
 
-<span class="c1"># Back-transform from log-space to population levels</span>
 <span class="n">forecast_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">forecast_df</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">])</span>
 <span class="n">forecast_df</span><span class="p">[</span><span class="s2">"LOWER_95"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">forecast_df</span><span class="p">[</span><span class="s2">"mean_ci_lower"</span><span class="p">])</span>
 <span class="n">forecast_df</span><span class="p">[</span><span class="s2">"UPPER_95"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">forecast_df</span><span class="p">[</span><span class="s2">"mean_ci_upper"</span><span class="p">])</span>
 
-<span class="c1"># Attach calendar years</span>
 <span class="n">start_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="n">future_years</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">start_year</span> <span class="o">+</span> <span class="n">forecast_steps</span><span class="p">))</span>
 <span class="n">forecast_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">future_years</span>
@@ -8616,30 +8581,24 @@ Model 2 Results (select years):
 <div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 2 VISUALIZATION</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 2: VISUALIZATION"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
-<span class="c1"># Historical data</span>
 <span class="n">hist_years</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">hist_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># Plot confidence band first</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"LOWER_95"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"UPPER_95"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"LOWER_95"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"UPPER_95"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'mediumseagreen'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'95% Confidence Interval'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Plot historical data</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical Data (2000-2024)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="c1"># Plot forecast with smooth connection to historical data</span>
 <span class="n">forecast_years_extended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">forecast_pop_extended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_pop</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_years_extended</span><span class="p">,</span> <span class="n">forecast_pop_extended</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'mediumseagreen'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'ARIMA Forecast (2025-2035)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
-<span class="c1"># Formatting</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Model 2: ARIMA(1,1,0) Time-Series - Population Forecast'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Year'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Population'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
@@ -8647,7 +8606,6 @@ Model 2 Results (select years):
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Set x-axis limits</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2035</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -8769,18 +8727,15 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 3: COHORT-COMPONENT</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 3: COHORT-COMPONENT MODEL"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
-<span class="c1"># Step 1: Define fertility distribution</span>
 <span class="n">fertility_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s2">"age_group"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"15-19"</span><span class="p">,</span> <span class="s2">"20-24"</span><span class="p">,</span> <span class="s2">"25-29"</span><span class="p">,</span> <span class="s2">"30-34"</span><span class="p">,</span> <span class="s2">"35-39"</span><span class="p">,</span> <span class="s2">"40-44"</span><span class="p">,</span> <span class="s2">"45-49"</span><span class="p">],</span>
     <span class="s2">"relative_fertility"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.200</span><span class="p">,</span> <span class="mf">0.300</span><span class="p">,</span> <span class="mf">0.250</span><span class="p">,</span> <span class="mf">0.150</span><span class="p">,</span> <span class="mf">0.050</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">]</span>
 <span class="p">})</span>
 
-<span class="c1"># Expand to single-year ages</span>
 <span class="n">fertility_map</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">fertility_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
     <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s2">"age_group"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">))</span>
@@ -8792,7 +8747,6 @@ $$</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Age-specific fertility weights (relative probabilities):"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">fertility_data</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
-<span class="c1"># Calibrate birth rate factor using 2020 observed data</span>
 <span class="n">pop_2020</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2020</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">pop_2020</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_2020</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
@@ -8887,7 +8841,6 @@ $$</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 2: Gompertz Mortality ---"</span><span class="p">)</span>
 
-<span class="c1"># Prepare 2020 Census mortality data</span>
 <span class="n">mort</span> <span class="o">=</span> <span class="n">mortality_rate_2020_census</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">mort</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">mort</span><span class="o">.</span><span class="n">columns</span>
@@ -8905,12 +8858,10 @@ $$</p>
 <span class="n">mort</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mort</span><span class="p">[</span><span class="s2">"DEATHS"</span><span class="p">]</span> <span class="o">/</span> <span class="n">mort</span><span class="p">[</span><span class="s2">"POP"</span><span class="p">]</span>
 <span class="n">mort</span> <span class="o">=</span> <span class="n">mort</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">])</span>
 
-<span class="c1"># Build full age grid (0-85+)</span>
 <span class="n">base_ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"AGE"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">86</span><span class="p">))})</span>
 <span class="n">mort_base</span> <span class="o">=</span> <span class="n">base_ages</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mort</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="s2">"death_rate"</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
 <span class="n">mort_base</span><span class="p">[</span><span class="s2">"log_dr"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mort_base</span><span class="p">[</span><span class="s2">"death_rate"</span><span class="p">])</span>
 
-<span class="c1"># Fit Gompertz on ages 50-75 (where exponential pattern is strongest)</span>
 <span class="n">mort_fit</span> <span class="o">=</span> <span class="n">mort_base</span><span class="p">[(</span><span class="n">mort_base</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mort_base</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">75</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">X_fit</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">mort_fit</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">]],</span> <span class="n">has_constant</span><span class="o">=</span><span class="s2">"add"</span><span class="p">)</span>
 <span class="n">gompertz_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">mort_fit</span><span class="p">[</span><span class="s2">"log_dr"</span><span class="p">],</span> <span class="n">X_fit</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -8925,18 +8876,15 @@ $$</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  • Doubling time: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">beta</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> years"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  • Each additional year of age multiplies mortality by e^β = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Apply Gompertz to all ages and extrapolate to 85+</span>
 <span class="n">X_all</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">base_ages</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">]],</span> <span class="n">has_constant</span><span class="o">=</span><span class="s2">"add"</span><span class="p">)</span>
 <span class="n">mort_base</span><span class="p">[</span><span class="s2">"exp_mortality_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">gompertz_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_all</span><span class="p">))</span>
 
-<span class="c1"># For age 85+, use representative age 88</span>
 <span class="n">X_85</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"AGE"</span><span class="p">:</span> <span class="p">[</span><span class="mi">88</span><span class="p">]}),</span> <span class="n">has_constant</span><span class="o">=</span><span class="s2">"add"</span><span class="p">)</span>
 <span class="n">dr_85plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">gompertz_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_85</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="n">mort_final</span> <span class="o">=</span> <span class="n">mort_base</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="s2">"exp_mortality_rate"</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">mort_final</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mort_final</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">85</span><span class="p">,</span> <span class="s2">"exp_mortality_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dr_85plus</span>
 
-<span class="c1"># Compute incremental mortality (for cohort transition)</span>
 <span class="n">mort_final</span><span class="p">[</span><span class="s2">"mortality_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mort_final</span><span class="p">[</span><span class="s2">"exp_mortality_rate"</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
 <span class="n">mort_final</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"mortality_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mort_final</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"exp_mortality_rate"</span><span class="p">]</span>
 
@@ -9009,16 +8957,13 @@ $$</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 3: Migration Analysis ---"</span><span class="p">)</span>
 
-<span class="c1"># Build historical panel (2000-2024) with all ages</span>
 <span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">df_hist</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-<span class="c1"># Compute annual net migration differential</span>
 <span class="n">pop_estimate_components</span><span class="p">[</span><span class="s2">"DIFF"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">pop_estimate_components</span><span class="p">[</span><span class="s2">"NET_MIG"</span><span class="p">]</span> <span class="o">+</span> <span class="n">pop_estimate_components</span><span class="p">[</span><span class="s2">"RESIDUAL"</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="c1"># Age-weighted migration by year</span>
 <span class="n">df_hist</span><span class="p">[</span><span class="s2">"popestimate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_hist</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"YEAR"</span><span class="p">)[</span><span class="s2">"TOT_POP"</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">"sum"</span><span class="p">)</span>
 <span class="n">df_hist</span><span class="p">[</span><span class="s2">"ageweighted_pop"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_hist</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_hist</span><span class="p">[</span><span class="s2">"popestimate"</span><span class="p">]</span>
 
@@ -9026,7 +8971,6 @@ $$</p>
 <span class="n">df_hist</span> <span class="o">=</span> <span class="n">df_hist</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">diff_by_year</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"YEAR"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
 <span class="n">df_hist</span><span class="p">[</span><span class="s2">"ageweighted_diff"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_hist</span><span class="p">[</span><span class="s2">"ageweighted_pop"</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_hist</span><span class="p">[</span><span class="s2">"DIFF"</span><span class="p">]</span>
 
-<span class="c1"># Compute mean and std by age</span>
 <span class="n">mig_stats</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">df_hist</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"AGE"</span><span class="p">)[</span><span class="s2">"ageweighted_diff"</span><span class="p">]</span>
     <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">avg_ageweighted_diff</span><span class="o">=</span><span class="s2">"mean"</span><span class="p">,</span> <span class="n">std_ageweighted_diff</span><span class="o">=</span><span class="s2">"std"</span><span class="p">)</span>
@@ -9098,10 +9042,9 @@ Note: Migration component is the primary source of population variability
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 4: Assemble Projection Panel ---"</span><span class="p">)</span>
 
-<span class="c1"># Build panel for years 2020-2024 with all components</span>
 <span class="n">df_proj</span> <span class="o">=</span> <span class="n">pop_by_agesex</span><span class="p">[</span><span class="n">pop_by_agesex</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">df_proj</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mort_final</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="s2">"mortality_rate"</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
-<span class="n">df_proj</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">fertility_map_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"fertility_prob"</span><span class="p">:</span> <span class="s2">"fertility_prop"</span><span class="p">}),</span> 
+<span class="n">df_proj</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">fertility_map_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"fertility_prob"</span><span class="p">:</span> <span class="s2">"fertility_prop"</span><span class="p">}),</span>
                         <span class="n">on</span><span class="o">=</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
 <span class="n">df_proj</span><span class="p">[</span><span class="s2">"fertility_prop"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_proj</span><span class="p">[</span><span class="s2">"fertility_prop"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">df_proj</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">49</span><span class="p">),</span> <span class="s2">"fertility_prop"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -9110,12 +9053,10 @@ Note: Migration component is the primary source of population variability
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Projection panel shape: </span><span class="si">{</span><span class="n">df_proj</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Columns: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df_proj</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Extract female ratio (stable across recent years)</span>
 <span class="n">df_4yrs</span> <span class="o">=</span> <span class="n">df_proj</span><span class="p">[(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">2024</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">49</span><span class="p">))]</span>
 <span class="n">female_ratio</span> <span class="o">=</span> <span class="n">df_4yrs</span><span class="p">[</span><span class="s2">"TOT_FEMALE"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">df_4yrs</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Female ratio (2021-2024, ages 15-49): </span><span class="si">{</span><span class="n">female_ratio</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Extract age 85+ geometric growth rate</span>
 <span class="n">pop_85_hist</span> <span class="o">=</span> <span class="n">df_proj</span><span class="p">[(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"AGE"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">85</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_proj</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2024</span><span class="p">))]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"YEAR"</span><span class="p">)</span>
 <span class="n">p85_start</span> <span class="o">=</span> <span class="n">pop_85_hist</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"TOT_POP"</span><span class="p">]</span>
 <span class="n">p85_end</span> <span class="o">=</span> <span class="n">pop_85_hist</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"TOT_POP"</span><span class="p">]</span>
@@ -9192,53 +9133,46 @@ $$</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- STEP 5: Projection Loop (2025-2035) ---"</span><span class="p">)</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">project_one_year</span><span class="p">(</span><span class="n">df_prev</span><span class="p">,</span> <span class="n">birth_rate_factor</span><span class="p">,</span> <span class="n">female_ratio</span><span class="p">,</span> <span class="n">p85_current</span><span class="p">,</span> <span class="n">g85</span><span class="p">,</span> 
+<span class="k">def</span><span class="w"> </span><span class="nf">project_one_year</span><span class="p">(</span><span class="n">df_prev</span><span class="p">,</span> <span class="n">birth_rate_factor</span><span class="p">,</span> <span class="n">female_ratio</span><span class="p">,</span> <span class="n">p85_current</span><span class="p">,</span> <span class="n">g85</span><span class="p">,</span>
                      <span class="n">diff_col</span><span class="o">=</span><span class="s2">"avg_ageweighted_diff"</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Project cohort-component model one year forward</span>
 <span class="sd">    """</span>
     <span class="n">df_p</span> <span class="o">=</span> <span class="n">df_prev</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"AGE"</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
-    <span class="c1"># Step 1: Births (age 0 entry)</span>
+
     <span class="n">births</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_p</span><span class="p">[</span><span class="s2">"TOT_FEMALE"</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_p</span><span class="p">[</span><span class="s2">"fertility_prop"</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="n">birth_rate_factor</span>
-    
-    <span class="c1"># Step 2: Cohort aging (ages 1-84)</span>
+
     <span class="n">prev_pop</span> <span class="o">=</span> <span class="n">df_p</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">prev_mort</span> <span class="o">=</span> <span class="n">df_p</span><span class="p">[</span><span class="s2">"mortality_rate"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">prev_mig</span> <span class="o">=</span> <span class="n">df_p</span><span class="p">[</span><span class="n">diff_col</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="n">new_pop</span> <span class="o">=</span> <span class="n">prev_pop</span> <span class="o">-</span> <span class="p">(</span><span class="n">prev_mort</span> <span class="o">*</span> <span class="n">prev_pop</span><span class="p">)</span> <span class="o">+</span> <span class="n">prev_mig</span>
-    <span class="n">new_pop</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">births</span>  <span class="c1"># Assign births to age 0</span>
-    
-    <span class="c1"># Step 3: Age 85+ (geometric trend)</span>
+    <span class="n">new_pop</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">births</span>
+
     <span class="n">new_pop</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p85_current</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">)</span>
-    
-    <span class="c1"># Assemble output</span>
-    <span class="n">df_new</span> <span class="o">=</span> <span class="n">df_p</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="s2">"mortality_rate"</span><span class="p">,</span> <span class="s2">"fertility_prop"</span><span class="p">,</span> 
+
+    <span class="n">df_new</span> <span class="o">=</span> <span class="n">df_p</span><span class="p">[[</span><span class="s2">"AGE"</span><span class="p">,</span> <span class="s2">"mortality_rate"</span><span class="p">,</span> <span class="s2">"fertility_prop"</span><span class="p">,</span>
                    <span class="s2">"avg_ageweighted_diff"</span><span class="p">,</span> <span class="s2">"std_ageweighted_diff"</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_pop</span><span class="o">.</span><span class="n">values</span>
-    
-    <span class="c1"># Step 4: Sex split</span>
+
     <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_FEMALE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">female_ratio</span> <span class="o">*</span> <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span>
     <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_MALE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_FEMALE"</span><span class="p">]</span>
-    
-    <span class="c1"># Step 5: Deaths</span>
+
     <span class="n">df_new</span><span class="p">[</span><span class="s2">"deaths"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_new</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_new</span><span class="p">[</span><span class="s2">"mortality_rate"</span><span class="p">]</span>
-    
+
     <span class="k">return</span> <span class="n">df_new</span>
 
-<span class="c1"># Initialize projection with historical years</span>
 <span class="n">df_proj_full</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">p85_rolling</span> <span class="o">=</span> <span class="n">p85_end</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Projecting years 2025-2035..."</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">2036</span><span class="p">):</span>
     <span class="n">p85_rolling</span> <span class="o">=</span> <span class="n">p85_rolling</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">)</span>
-    
+
     <span class="n">df_prev</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_proj_full</span><span class="p">[</span><span class="n">df_proj_full</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
                <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"AGE"</span><span class="p">)</span>
                <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-    
+
     <span class="n">df_new</span> <span class="o">=</span> <span class="n">project_one_year</span><span class="p">(</span><span class="n">df_prev</span><span class="p">,</span> <span class="n">birth_rate_factor</span><span class="p">,</span> <span class="n">female_ratio</span><span class="p">,</span>
                              <span class="n">p85_rolling</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">),</span> <span class="n">g85</span><span class="p">)</span>
     <span class="n">df_new</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
@@ -9246,7 +9180,6 @@ $$</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Projection complete"</span><span class="p">)</span>
 
-<span class="c1"># Yearly totals</span>
 <span class="n">yearly_model3</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">df_proj_full</span><span class="p">[</span><span class="n">df_proj_full</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">2035</span><span class="p">)]</span>
     <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"YEAR"</span><span class="p">)[</span><span class="s2">"TOT_POP"</span><span class="p">]</span>
@@ -9363,37 +9296,35 @@ Model 3 Results (Base Scenario):
 
 <span class="k">for</span> <span class="n">scen_name</span><span class="p">,</span> <span class="n">sigma_mult</span> <span class="ow">in</span> <span class="n">scenarios</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">df_scen</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    
-    <span class="c1"># Adjust migration for this scenario</span>
+
     <span class="n">df_scen</span><span class="p">[</span><span class="s2">"migration_scenario"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">df_scen</span><span class="p">[</span><span class="s2">"avg_ageweighted_diff"</span><span class="p">]</span> <span class="o">+</span> <span class="n">sigma_mult</span> <span class="o">*</span> <span class="n">df_scen</span><span class="p">[</span><span class="s2">"std_ageweighted_diff"</span><span class="p">]</span>
     <span class="p">)</span>
-    
+
     <span class="n">df_scen_full</span> <span class="o">=</span> <span class="n">df_scen</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">p85_rolling_s</span> <span class="o">=</span> <span class="n">p85_end</span>
     <span class="n">yearly_totals</span> <span class="o">=</span> <span class="p">[]</span>
-    
+
     <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">2036</span><span class="p">):</span>
         <span class="n">p85_rolling_s</span> <span class="o">=</span> <span class="n">p85_rolling_s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">)</span>
-        
+
         <span class="n">df_prev_s</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_scen_full</span><span class="p">[</span><span class="n">df_scen_full</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"AGE"</span><span class="p">)</span>
                      <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-        
+
         <span class="n">df_new_s</span> <span class="o">=</span> <span class="n">project_one_year</span><span class="p">(</span><span class="n">df_prev_s</span><span class="p">,</span> <span class="n">birth_rate_factor</span><span class="p">,</span> <span class="n">female_ratio</span><span class="p">,</span>
-                                   <span class="n">p85_rolling_s</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">),</span> <span class="n">g85</span><span class="p">,</span> 
+                                   <span class="n">p85_rolling_s</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g85</span><span class="p">),</span> <span class="n">g85</span><span class="p">,</span>
                                    <span class="n">diff_col</span><span class="o">=</span><span class="s2">"migration_scenario"</span><span class="p">)</span>
         <span class="n">df_new_s</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
         <span class="n">df_new_s</span><span class="p">[</span><span class="s2">"migration_scenario"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">df_new_s</span><span class="p">[</span><span class="s2">"avg_ageweighted_diff"</span><span class="p">]</span> <span class="o">+</span> <span class="n">sigma_mult</span> <span class="o">*</span> <span class="n">df_new_s</span><span class="p">[</span><span class="s2">"std_ageweighted_diff"</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">df_scen_full</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_scen_full</span><span class="p">,</span> <span class="n">df_new_s</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        
+
         <span class="n">yearly_totals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_new_s</span><span class="p">[</span><span class="s2">"TOT_POP"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-    
+
     <span class="n">scenario_results</span><span class="p">[</span><span class="n">scen_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">yearly_totals</span>
 
-<span class="c1"># Create scenarios dataframe</span>
 <span class="n">scenarios_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scenario_results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">2036</span><span class="p">))</span>
 <span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"YEAR"</span>
 
@@ -9452,41 +9383,32 @@ YEAR
 <div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># MODEL 3 VISUALIZATION</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL 3: VISUALIZATION"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
-<span class="c1"># Historical data</span>
 <span class="n">hist_years</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">hist_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># Plot scenario bands FIRST (95% band outer, then 67% band inner)</span>
-<span class="c1"># Very Low and Very High (±2σ) - lightest</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vlow'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vhigh'</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vlow'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vhigh'</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±2σ (95</span><span class="si">% r</span><span class="s1">ange)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
 
-<span class="c1"># Low and High (±1σ) - medium shade</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.28</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±1σ (67</span><span class="si">% r</span><span class="s1">ange)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
 
-<span class="c1"># Add border lines for the scenario bands</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vlow'</span><span class="p">],</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vhigh'</span><span class="p">],</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">],</span> <span class="s1">'-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">],</span> <span class="s1">'-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Plot historical data</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical Data (2000-2024)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="c1"># Plot base scenario with smooth connection to historical</span>
 <span class="n">forecast_years_ext3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">forecast_pop_ext3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_pop</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'base'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_years_ext3</span><span class="p">,</span> <span class="n">forecast_pop_ext3</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkred'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Base Forecast (2025-2035)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="c1"># Formatting</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Model 3: Cohort-Component - Population Forecast with Migration Scenarios'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Year'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Population'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
@@ -9494,7 +9416,6 @@ YEAR
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Set x-axis limits</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2035</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -9570,12 +9491,10 @@ Forecast Summary (Base Scenario):
 <div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Prepare comparison</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"MODEL COMPARISON"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
-<span class="c1"># Extract 2035 forecasts from each model</span>
 <span class="n">model1_2035</span> <span class="o">=</span> <span class="n">model1_df</span><span class="p">[</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2035</span><span class="p">][</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">model2_2035</span> <span class="o">=</span> <span class="n">model2_df</span><span class="p">[</span><span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2035</span><span class="p">][</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">model3_2035</span> <span class="o">=</span> <span class="n">scenarios_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2035</span><span class="p">,</span> <span class="s2">"base"</span><span class="p">]</span>
@@ -9646,23 +9565,17 @@ Model 3: Cohort-Component       7,047,026       0.762%           793,820
 <div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create 3-panel visualization</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
-<span class="c1"># Historical data for all models</span>
 <span class="n">hist_years</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">hist_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># =====================</span>
-<span class="c1"># PANEL 1: Model 1 (Extrapolation)</span>
-<span class="c1"># =====================</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_UP"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_1S_UP"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±1σ (67% CI)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_UP"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_LOW"</span><span class="p">],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_2S_UP"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±2σ (95% CI)'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="c1"># Connect to forecast smoothly</span>
 <span class="n">forecast_years_ext1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">forecast_pop_ext1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_pop</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model1_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_years_ext1</span><span class="p">,</span> <span class="n">forecast_pop_ext1</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Forecast'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -9673,14 +9586,10 @@ Model 3: Cohort-Component       7,047,026       0.762%           793,820
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">x</span><span class="o">/</span><span class="mf">1e6</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">M'</span><span class="p">))</span>
 
-<span class="c1"># =====================</span>
-<span class="c1"># PANEL 2: Model 2 (ARIMA)</span>
-<span class="c1"># =====================</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"LOWER_95"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"UPPER_95"</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"LOWER_95"</span><span class="p">],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"UPPER_95"</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'mediumseagreen'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'95% CI'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="c1"># Connect to forecast smoothly</span>
 <span class="n">forecast_years_ext2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"YEAR"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">forecast_pop_ext2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">hist_pop</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">model2_df</span><span class="p">[</span><span class="s2">"POP_ESTIMATE"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_years_ext2</span><span class="p">,</span> <span class="n">forecast_pop_ext2</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'mediumseagreen'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Forecast'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -9691,13 +9600,10 @@ Model 3: Cohort-Component       7,047,026       0.762%           793,820
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">x</span><span class="o">/</span><span class="mf">1e6</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">M'</span><span class="p">))</span>
 
-<span class="c1"># =====================</span>
-<span class="c1"># PANEL 3: Model 3 (Cohort-Component with Scenarios)</span>
-<span class="c1"># =====================</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±1σ band'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vlow'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vhigh'</span><span class="p">],</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vlow'</span><span class="p">],</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'vhigh'</span><span class="p">],</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'±2σ band'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_years</span><span class="p">,</span> <span class="n">hist_pop</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'steelblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Historical'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scenarios_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scenarios_df</span><span class="p">[</span><span class="s1">'base'</span><span class="p">],</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Base Forecast'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -9790,26 +9696,20 @@ Model 3: Cohort-Component       7,047,026       0.762%           793,820
 <span class="nb">print</span><span class="p">(</span><span class="s2">"EXPORT RESULTS"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
-<span class="c1"># Create Excel writer</span>
 <span class="n">output_file</span> <span class="o">=</span> <span class="s2">"population_forecasts_atlanta_msa.xlsx"</span>
 <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-    <span class="c1"># Model 1 Results</span>
     <span class="n">model1_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'Model 1 - Extrapolation'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Model 1 exported (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">model1_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows)"</span><span class="p">)</span>
-    
-    <span class="c1"># Model 2 Results</span>
+
     <span class="n">model2_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'Model 2 - ARIMA'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Model 2 exported (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">model2_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows)"</span><span class="p">)</span>
-    
-    <span class="c1"># Model 3 Results</span>
+
     <span class="n">yearly_model3</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'Model 3 - Cohort Base'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Model 3 Base scenario exported (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">yearly_model3</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows)"</span><span class="p">)</span>
-    
-    <span class="c1"># All scenarios</span>
+
     <span class="n">scenarios_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'Model 3 - All Scenarios'</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Model 3 All scenarios exported (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">scenarios_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows)"</span><span class="p">)</span>
-    
-    <span class="c1"># Comparison</span>
+
     <span class="n">comparison</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'Model Comparison'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Model comparison summary exported"</span><span class="p">)</span>
 
